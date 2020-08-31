@@ -10,7 +10,7 @@ Now, let's take a look at a specific example of a pipeline applied to facial exp
 **Facial recognition pipeline**
 ![Image](https://video.udacity-data.com/topher/2018/April/5ade67ef_screen-shot-2018-04-23-at-4.10.20-pm/screen-shot-2018-04-23-at-4.10.20-pm.png)
 
-## Standardizing Data
+### Standardizing Data
 Pre-processing images is all about standardizing input images so that you can move further along the pipeline and analyze images in the same way. In machine learning tasks, the pre-processing step is often one of the most important.
 
 For example, imagine that you've created a simple algorithm to distinguish between stop signs and other traffic lights.
@@ -66,3 +66,10 @@ Two, slightly-angled lines, each of which divides the data into two groups.
 ![Image](https://video.udacity-data.com/topher/2018/March/5ab5884a_screen-shot-2018-03-23-at-4.05.32-pm/screen-shot-2018-03-23-at-4.05.32-pm.png)
 
 Both lines, combined, clearly separate the car and bike data!
+
+### Images as Numerical Data
+Every pixel in an image is just a numerical value and, we can also change these pixel values. We can multiply every single one by a scalar to change how bright the image is, we can shift each pixel value to the right, and many more operations!
+
+**Treating images as grids of numbers is the basis for many image processing techniques.**
+
+Most color and shape transformations are done just by mathematically operating on an image and changing it pixel-by-pixel.
