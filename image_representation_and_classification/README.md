@@ -73,3 +73,25 @@ Every pixel in an image is just a numerical value and, we can also change these 
 **Treating images as grids of numbers is the basis for many image processing techniques.**
 
 Most color and shape transformations are done just by mathematically operating on an image and changing it pixel-by-pixel.
+
+### Color Images
+Color images are interpreted as 3D cubes of values with width, height, and depth!
+
+The depth is the number of colors. Most color images can be represented by combinations of only 3 colors: red, green, and blue values; these are known as RGB images. And for RGB images, the depth is 3!
+
+It’s helpful to think of the depth as three stacked, 2D color layers. One layer is Red, one Green, and one Blue. Together they create a complete color image.
+
+![Image](https://video.udacity-data.com/topher/2017/December/5a386e3b_screen-shot-2017-12-18-at-5.41.01-pm/screen-shot-2017-12-18-at-5.41.01-pm.png)
+
+RGB layers of a car image.
+
+#### Importance of Color
+In general, when you think of a classification challenge, like identifying lane lines or cars or people, you can decide whether color information and color images are useful by thinking about your own vision.
+
+If the identification problem is easier in color for us humans, it’s likely easier for an algorithm to see color images too!
+
+#### Why BGR instead of RGB?
+OpenCV reads in images in BGR format (instead of RGB) because when OpenCV was first being developed, BGR color format was popular among camera manufacturers and image software providers. The red channel was considered one of the least important color channels, so was listed last, and many bitmaps use BGR format for image storage. However, now the standard has changed and most image software and cameras use RGB format, which is why, in these examples, it's good practice to initially convert BGR images to RGB before analyzing or manipulating them.
+
+**Changing Color Spaces**  
+To change color spaces, we used OpenCV's cvtColor function, whose documentation is [here](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_colorspaces/py_colorspaces.html).
