@@ -95,3 +95,66 @@ OpenCV reads in images in BGR format (instead of RGB) because when OpenCV was fi
 
 **Changing Color Spaces**  
 To change color spaces, we used OpenCV's cvtColor function, whose documentation is [here](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_colorspaces/py_colorspaces.html).
+
+### Why do we need labels?
+You can tell if an image is night or day, but a computer cannot unless we tell it explicitly with a label!
+
+This becomes especially important when we are testing the accuracy of a classification model.
+
+A classifier takes in an image as input and should output a predicted_label that tells us the predicted class of that image. Now, when we load in data, like you’ve seen, we load in what are called the true_labels which are the correct labels for the image.
+
+To check the accuracy of a classification model, we compare the predicted and true labels. If the true and predicted labels match, then we’ve classified the image correctly! Sometimes the labels do not match, which means we’ve misclassified an image.
+
+![Image](https://video.udacity-data.com/topher/2017/December/5a38914e_screen-shot-2017-12-18-at-8.09.57-pm/screen-shot-2017-12-18-at-8.09.57-pm.png)
+
+A misclassified image example. The true_label is "day" and the predicted_label is "night".
+
+### Accuracy
+After looking at many images, the accuracy of a classifier is defined as the number of correctly classified images (for which the predicted_label matches the true label) divided by the total number of images. So, say we tried to classify 100 images total, and we correctly classified 81 of them. We’d have 0.81 or 81% accuracy!
+
+We can tell a computer to check the accuracy of a classifier only when we have these predicted and true labels to compare. We can also learn from any mistakes the classifier makes, as we’ll see later in this lesson.
+
+### Numerical labels
+It’s good practice to use numerical labels instead of strings or categorical labels. They're easier to track and compare. So, for day and night classification, it's binary class example, instead of "day" and "night" labels we’ll use the numerical labels: 0 for night and 1 for day.
+
+### Distinguishing and Measurable Traits
+When you approach a classification challenge, you may ask yourself: how can I tell these images apart? What traits do these images have that differentiate them, and how can I write code to represent their differences? Adding on to that, how can I ignore irrelevant or overly similar parts of these images?
+
+You may have thought about a number of distinguishing features: day images are much brighter, generally, than night images. Night images also have these really bright small spots, so the brightness over the whole image varies a lot more than the day images. There is a lot more of a gray/blue color palette in the day images.
+
+There are lots of measurable traits that distinguish these images, and these measurable traits are referred to as features.
+
+A feature a measurable component of an image or object that is, ideally, unique and recognizable under varying conditions - like under varying light or camera angle. And we’ll learn more about features soon.
+
+### Standardizing and Pre-processing
+But we’re getting ahead of ourselves! To extract features from any image, we have to pre-process and standardize them!
+
+Next we’ll take a look at the standardization steps we should take before we can consistently extract features.
+
+### Numerical vs. Categorical
+Let's learn a little more about labels. After visualizing the image data, you'll have seen that each image has an attached label: "day" or "night," and these are known as **categorical values**.
+
+Categorical values are typically text values that represent various traits about an image. A couple examples are:
+
+- An "animal" variable with the values: "cat," "tiger," "hippopotamus," and "dog."
+- A "color" variable with the values: "red," "green," and "blue."
+
+Each value represents a different category, and most collected data is labeled in this way!
+
+These labels are descriptive for us, but may be inefficient for a classification task. Many machine learning algorithms do not use categorical data; they require that all output be numerical. Numbers are easily compared and stored in memory, and for this reason, we often have to convert categorical values into numerical labels. There are two main approaches that you'll come across:
+
+1. Integer encoding
+2. One hot-encoding
+
+#### Integer Encoding
+Integer encoding means to assign each category value an integer value. So, day = 1 and night = 0. This is a nice way to separate binary data, and it's what we'll do for our day and night images.
+
+#### One-hot Encoding
+One-hot encoding is often used when there are more than 2 values to separate. A one-hot label is a 1D list that's the length of the number of classes. Say we are looking at the animal variable with the values: "cat," "tiger," "hippopotamus," and "dog." There are 4 classes in this category and so our one-hot labels will be a list of length four. The list will be all 0's and one 1; the 1 indicates which class a certain image is.
+
+For example, since we have four classes (cat, tiger, hippopotamus, and dog), we can make a list in that order: `[cat value, tiger value, hippopotamus value, dog value]`. In general, order does not matter.
+
+If we have an image and it's one-hot label is `[0, 1, 0, 0]`, what does that indicate?
+
+In order of [cat value, tiger value, hippopotamus value, dog value], that label indicates that it's an image of a tiger! Let's do one more example, what about the label `[0, 0, 0, 1]`?
+
