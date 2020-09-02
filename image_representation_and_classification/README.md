@@ -158,3 +158,25 @@ If we have an image and it's one-hot label is `[0, 1, 0, 0]`, what does that ind
 
 In order of [cat value, tiger value, hippopotamus value, dog value], that label indicates that it's an image of a tiger! Let's do one more example, what about the label `[0, 0, 0, 1]`?
 
+### Classification Task
+Let’s now complete our day and night classifier. After we extracted the average brightness value, we want to turn this feature into a `predicted_label` that classifies the image. Remember, we want to generate a numerical label, and again, since we have a binary dataset, I’ll create a label that is a 1 if an image is predicted to be day and a 0 for images predicted to be night.
+
+I can create a complete classifier by writing a function that takes in an image, extracts the brightness feature, and then checks if the average brightness is above some threshold X.
+
+If it is, this classifier returns a 1 (day), and if it’s not, this classifier returns a 0 (night)!
+
+Next, you'll take a look at this notebook and get a chance to tweak the threshold parameter. Then, when you're able to generate predicted labels, you can compare them to the true labels, and check the accuracy of our model!
+
+### Evaluation Metrics
+#### Accuracy
+The accuracy of a classification model is found by comparing predicted and true labels. For any given image, if the `predicted_label` matches the `true_label`, then this is a correctly classified image, if not, it is misclassified.
+
+The accuracy is given by the number of correctly classified images divided by the total number of images. We’ll test this classification model on new images, this is called a test set of data.
+
+#### Test Data
+Test data is previously unseen image data. The data you have seen, and that you used to help build a classifier is called training data, which we've been referring to. The idea in creating these two sets is to have one set that you can analyze and learn from (training), and one that you can get a sense of how your classifier might work in a real-world, general scenario. You could imagine going through each image in the training set and creating a classifier that can classify all of these training images correctly, but, you actually want to build a classifier that **recognizes general patterns** in data, so that when it is faced with a real-world scenario, it will still work!
+
+So, we use a new, test set of data to see how a classification model might work in the real-world and to determine the accuracy of the model.
+
+#### Misclassified Images
+In this and most classification examples, there are a few misclassified images in the test set. To see how to improve, it’s useful to take a look at these misclassified images; look at what they were mistakenly labeled as and where your model fails. It will be up to you to look at these images and think about how to improve the classification model!
