@@ -43,3 +43,39 @@ Kernel convolution relies on centering a pixel and looking at it's surrounding n
 **Padding** The image is padded with a border of 0's, black pixels.
 
 **Crop** Any pixel in the output image which would require values from beyond the edge is skipped. This method can result in the output image being slightly smaller, with the edges having been cropped.
+
+## Gradients
+Gradients are a measure of intensity change in an image, and they generally mark object boundaries and changing area of light and dark. If we think back to treating images as functions, F(x, y), we can think of the gradient as a derivative operation F’(x, y). Where the derivative is a measurement of intensity change.
+
+### Sobel filters
+The Sobel filter is very commonly used in edge detection and in finding patterns in intensity in an image. Applying a Sobel filter to an image is a way of taking (an approximation) of the derivative of the image in the xx or yy direction. The operators for Sobel_x and Sobel_y, respectively, look like this:
+
+![Image](https://video.udacity-data.com/topher/2017/June/59518439_screen-shot-2017-06-26-at-2.35.11-pm/screen-shot-2017-06-26-at-2.35.11-pm.png)
+
+
+Sobel filters
+
+Next, let's see an example of these two filters applied to an image of the brain.
+
+![Image](https://video.udacity-data.com/topher/2017/June/595186d6_screen-shot-2017-06-26-at-3.11.58-pm/screen-shot-2017-06-26-at-3.11.58-pm.png)
+
+Sobel x and y filters (left and right) applied to an image of a brain
+
+**x vs. y**
+In the above images, you can see that the gradients taken in both the xx and the yy directions detect the edges of the brain and pick up other edges. Taking the gradient in the xx direction emphasizes edges closer to vertical. Alternatively, taking the gradient in the yy direction emphasizes edges closer to horizontal.
+
+### Magnitude
+Sobel also detects which edges are strongest. This is encapsulated by the magnitude of the gradient; the greater the magnitude, the stronger the edge is. The magnitude, or absolute value, of the gradient is just the square root of the squares of the individual x and y gradients. For a gradient in both the xx and yy directions, the magnitude is the square root of the sum of the squares.
+
+abs_sobelx= \sqrt{(sobel_x)^2}
+
+abs_sobely= \sqrt{(sobel_y)^2}
+
+abs_sobelxy= \sqrt{(sobel_x)^2+(sobel_y)^2}
+
+### Direction
+In many cases, it will be useful to look for edges in a particular orientation. For example, we may want to find lines that only angle upwards or point left. By calculating the direction of the image gradient in the x and y directions separately, we can determine the direction of that gradient!
+
+The direction of the gradient is simply the inverse tangent (arctangent) of the yy gradient divided by the xx gradient:
+
+tan^{-1}{(sobel_y/sobel_x)}
