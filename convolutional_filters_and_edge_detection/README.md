@@ -79,3 +79,26 @@ In many cases, it will be useful to look for edges in a particular orientation. 
 The direction of the gradient is simply the inverse tangent (arctangent) of the yy gradient divided by the xx gradient:
 
 tan^{-1}{(sobel_y/sobel_x)}
+
+### Low Pass Filter - Gaussian Blur
+We often want to use a low pass filter to remove noise first before using a high pass filter to detect edges. Low pass filters smooth/blurs out the image by averaging the pixels so there is not as high change in pixel values due to noise. Gaussian Blur is an example of low pass filter.
+
+### The Importance of Filters
+What you've just learned about different types of filters will be really important as you progress through this course, especially when you get to Convolutional Neural Networks (CNNs). CNNs are a kind of deep learning model that can learn to do things like image classification and object recognition. They keep track of spatial information and learn to extract features like the edges of objects in something called a convolutional layer. Below you'll see an simple CNN structure, made of multiple layers, below, including this "convolutional layer".
+
+![Image](https://video.udacity-data.com/topher/2018/May/5b1070e4_screen-shot-2018-05-31-at-2.59.36-pm/screen-shot-2018-05-31-at-2.59.36-pm.png)
+
+Layers in a CNN.
+
+Convolutional Layer
+The convolutional layer is produced by applying a series of many different image filters, also known as convolutional kernels, to an input image.
+
+![Image](https://video.udacity-data.com/topher/2018/May/5b10723a_screen-shot-2018-05-31-at-3.06.07-pm/screen-shot-2018-05-31-at-3.06.07-pm.png)
+
+4 kernels = 4 filtered images.
+
+In the example shown, 4 different filters produce 4 differently filtered output images. When we stack these images, we form a complete convolutional layer with a depth of 4!
+
+![Image](https://video.udacity-data.com/topher/2018/May/5b10729b_screen-shot-2018-05-31-at-3.07.03-pm/screen-shot-2018-05-31-at-3.07.03-pm.png)
+
+A convolutional layer.
