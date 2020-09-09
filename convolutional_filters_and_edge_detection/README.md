@@ -140,3 +140,28 @@ The method we'll be looking at is called a Haar cascade classifier. It's a machi
 Images of faces and not-faces, going some feature extraction steps.
 
 After the classifier sees an image of a face or not-face, it extracts features from it. For this, Haar filters shown in the below image are used. They are just like the image filters you've programmed! A new, filtered image is produced when the input image is convolved with one of these filters at a time.
+
+### Haar Cascades
+Trains many positive images and negative images. From each image, it detects Haar features. Haar features are gradient measurements that look at rectangular regions around a certain pixel area, similar to CNN, and compute pixel difference at a larger scale. It detects edges, lines and rectangle patterns. It then uses a series of cascades. It looks at an image and applies a Haar feature detector then perform feautre dection. It classifies area of images and discard failed area and passing on passed area to the next classifier. It quickly thows away irrelevant data to speed up the process making this algorithm very fast.
+
+## Algorithms with Human and Data Bias
+Most of the models you've seen and/or programmed, rely on large sets of data to train and learn. When you approach a challenge, it's up to you as a programmer, to define functions and a model for classifying image data. Programmers and data define how classification algorithms like face recognition work.
+
+It's important to note that both data and humans come with their own biases, with unevenly distributed image types or personal preferences, respectively. And it's important to note that these biases propagate into the creation of algorithms. If we consider face recognition, think about the case in which a model like a Haar Cascade is trained on faces that are mainly white and female; this network will then excel at detecting those kinds of faces but not others. If this model is meant for general face recognition, then the biased data has ended up creating a biased model, and algorithms that do not reflect the diversity of the users it aims to serve is not very useful at all.
+
+The computer scientist, Joy Buolamwini, based out of the MIT Media Lab, has studied bias in decision-making algorithms, and her work has revealed some of the extent of this problem. One study looked at the error rates of facial recognition programs for women by shades of skin color; results pictured below.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5aded3cb_screen-shot-2018-04-23-at-11.34.35-pm/screen-shot-2018-04-23-at-11.34.35-pm.png)
+
+Image of facial recognition error rates, taken from MIT Media Lab's gender shades website.
+
+### Analyzing Fairness
+Identifying the fairness of a given algorithm is an active area of research. Here is an example of using a GAN (Generative Adversarial Network) to help a classifier detect bias and correct it's predictions: Implementing a fair classifier in PyTorch. And another paper that shows how "fair" credit loans affect diff populations (with helpful, interactive plots). I think that as computer vision becomes more ubiquitous, this area of research will become more and more important, and it is worth reading about and educating yourself!
+
+![Image](https://video.udacity-data.com/topher/2018/June/5b2c0d52_screen-shot-2018-06-21-at-1.39.47-pm/screen-shot-2018-06-21-at-1.39.47-pm.png)
+
+From credit loan paper, Delayed Impact of Fair Machine Learning.
+
+### Working to Eliminate Bias
+Biased results are the effect of bias in programmers and in data, and we can work to change this. We must be critical of our own work, critical of what we read, and develop methods for testing such algorithms. As you learn more about AI and deep learning models, you'll learn some methods for visualizing what a neural network has learned, and you're encouraged to look at your data and make sure that it is balanced; data is the foundation for any machine and deep learning model. It's also good practice to test any algorithm for bias; as you develop deep learning models, it's a good idea to test how they respond to a variety of challenges and see if they have any weaknesses.
+
