@@ -102,3 +102,15 @@ In the example shown, 4 different filters produce 4 differently filtered output 
 ![Image](https://video.udacity-data.com/topher/2018/May/5b10729b_screen-shot-2018-05-31-at-3.07.03-pm/screen-shot-2018-05-31-at-3.07.03-pm.png)
 
 A convolutional layer.
+
+## Edge Detection
+Now that you've seen how to define and use image filters for smoothing images and detecting the edges (high-frequency) components of objects in an image, let's move one step further. The next few videos will be all about how we can use what we know about pattern recognition in images to begin identifying unique shapes and then objects.
+
+### Edges to Boundaries and Shapes
+We know how to detect the edges of objects in images, but how can we begin to find unifying boundaries around objects? We'll want to be able to do this to separate and locate multiple objects in a given image. Next, we'll discuss the Hough transform, which transforms image data from the x-y coordinate system into Hough space, where you can easily identify simple boundaries like lines and circles.
+
+The Hough transform is used in a variety of shape-recognition applications, as seen in the images pictured below. On the left you see how a Hough transform can find the edges of a phone screen and on the right you see how it's applied to an aerial image of farms (green circles in this image).
+
+![Image](https://video.udacity-data.com/topher/2018/April/5ad90d4d_screen-shot-2018-04-19-at-2.42.19-pm/screen-shot-2018-04-19-at-2.42.19-pm.png)
+
+Hough transform applied to phone-edge and circular farm recognition.
