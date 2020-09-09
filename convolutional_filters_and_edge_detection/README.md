@@ -109,8 +109,34 @@ Now that you've seen how to define and use image filters for smoothing images an
 ### Edges to Boundaries and Shapes
 We know how to detect the edges of objects in images, but how can we begin to find unifying boundaries around objects? We'll want to be able to do this to separate and locate multiple objects in a given image. Next, we'll discuss the Hough transform, which transforms image data from the x-y coordinate system into Hough space, where you can easily identify simple boundaries like lines and circles.
 
+### Hough transform
 The Hough transform is used in a variety of shape-recognition applications, as seen in the images pictured below. On the left you see how a Hough transform can find the edges of a phone screen and on the right you see how it's applied to an aerial image of farms (green circles in this image).
 
 ![Image](https://video.udacity-data.com/topher/2018/April/5ad90d4d_screen-shot-2018-04-19-at-2.42.19-pm/screen-shot-2018-04-19-at-2.42.19-pm.png)
 
 Hough transform applied to phone-edge and circular farm recognition.
+
+The Hough transform is a feature extraction technique used in image analysis, computer vision, and digital image processing. The purpose of the technique is to find imperfect instances of objects within a certain class of shapes by a voting procedure. This voting procedure is carried out in a parameter space (Hough space), from which object candidates are obtained as local maxima in a so-called accumulator space that is explicitly constructed by the algorithm for computing the Hough transform.
+
+The classical Hough transform was concerned with the identification of lines in the image, but later the Hough transform has been extended to identifying positions of arbitrary shapes, most commonly circles or ellipses.
+
+## Feature Extraction and Object Recognition
+So, you've seen how to detect consistent shapes with something like the Hough transform that transforms shapes in x-y coordinate space into intersecting lines in Hough space. You've also gotten experience programming your own image filters to perform edge detection. Filtering images is a feature extraction technique because it filters out unwanted image information and extracts unique and identfiying features like edges or corners.
+
+Extracting features and patterns in image data, using things like image filters, is the basis for many object recognition techniques. In the image below, we see a classification pipeline that is looking at an image of a banana; the image first goes through some filters and processing steps to form a feature that represent that banana, and this is used to help classify it. And we'll learn more about feature types and extraction methods in the next couple lessons.
+
+
+![Image](https://video.udacity-data.com/topher/2018/April/5ad91654_screen-shot-2018-04-19-at-3.18.06-pm/screen-shot-2018-04-19-at-3.18.06-pm.png)
+
+Training data (an image of a banana) going through some feature extraction and classification steps.
+
+### Haar Cascade and Face Recognition
+In the next video, we'll see how we can use a feature-based classifier to do face recognition.
+
+The method we'll be looking at is called a Haar cascade classifier. It's a machine learning based approach where a cascade function is trained to solve a binary classification problem: face or not-face; it trains on a lot of positive (face) and negative (not-face) images, as seen below.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5ad91b68_haar-2-gif/haar-2-gif.gif)
+
+Images of faces and not-faces, going some feature extraction steps.
+
+After the classifier sees an image of a face or not-face, it extracts features from it. For this, Haar filters shown in the below image are used. They are just like the image filters you've programmed! A new, filtered image is produced when the input image is convolved with one of these filters at a time.
