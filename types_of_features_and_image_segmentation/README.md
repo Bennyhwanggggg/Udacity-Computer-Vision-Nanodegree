@@ -49,8 +49,6 @@ opening = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
 ```
 ![Image](https://video.udacity-data.com/topher/2017/June/5956df32_screen-shot-2017-06-30-at-4.30.11-pm/screen-shot-2017-06-30-at-4.30.11-pm.png)
 
-Opening
-
 ### Closing
 **Closing** is the reverse combination of opening; it’s **dilation followed by erosion**, which is useful in closing small holes or dark areas within an object.
 
@@ -60,6 +58,5 @@ closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
 ```
 ![Image](https://video.udacity-data.com/topher/2017/June/5956e0b9_screen-shot-2017-06-30-at-4.37.13-pm/screen-shot-2017-06-30-at-4.37.13-pm.png)
 
-Closing
 
 Many of these operations try to extract better (less noisy) information about the shape of an object or enlarge important features, as in the case of corner detection!
