@@ -60,3 +60,21 @@ closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
 
 
 Many of these operations try to extract better (less noisy) information about the shape of an object or enlarge important features, as in the case of corner detection!
+
+## Image Segmentation
+Grouping or segmenting images into distinct parts is known as image segmentation.
+
+The simplest case for image segmentation is in background subtraction. In video and other applications, it is often the case that a human has to be isolated from a static or moving background, and so we have to use segmentation methods to distinguish these areas. Image segmentation is also used in a variety of complex recognition tasks, such as in classifying every pixel in an image of the road.
+
+We'll look at a couple ways to segment an image:
+- Using contours to draw boundaries around different parts of an image
+- Clustering image data by some measure of color or texture similarity.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5ad9254f_screen-shot-2018-04-19-at-4.24.35-pm/screen-shot-2018-04-19-at-4.24.35-pm.png)
+
+Partially-segmented image of a road; the image separates areas that contain a pedestrian from areas in the image that contain the street or cars.
+
+### Image Contours
+[Detailed Explaination Video](https://www.youtube.com/watch?time_continue=4&v=Wcbrl7Wr_kU&feature=emb_logo)
+
+One common technique is [K-Means Clustering](https://www.youtube.com/watch?v=Cf_LSDCEBzk). It is an unsupervised learning technique and can be used to separate an image into segments by clustering data points that have similar traits.
