@@ -30,4 +30,4 @@ The keypoints found by FAST give us the information about key edges in an image 
 #### BRIEF (Binary Robust Independent Elementary Features)
 [Detailed Explaination Video](https://www.youtube.com/watch?v=EKIPEPpRciw)
 
-Uses Binary feature vectors to describe the image. Starts by smoothing the given image
+Uses Binary feature vectors to describe the image. Starts by smoothing the given image with a Gaussian kernel so the descriptor is not too sensitive to high frequency noise. Next, given a keypoint, BRIEF selects a neighbourhood patch around the keypoint. In that patch, it selects random pixels centered around the keypoint and construct the binary vector based on comparison between the two keypoints. It does this for 256 points for each keypoint until the 256 length binary vector is constructed.
