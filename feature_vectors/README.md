@@ -31,3 +31,17 @@ The keypoints found by FAST give us the information about key edges in an image 
 [Detailed Explaination Video](https://www.youtube.com/watch?v=EKIPEPpRciw)
 
 Uses Binary feature vectors to describe the image. Starts by smoothing the given image with a Gaussian kernel so the descriptor is not too sensitive to high frequency noise. Next, given a keypoint, BRIEF selects a neighbourhood patch around the keypoint. In that patch, it selects random pixels centered around the keypoint and construct the binary vector based on comparison between the two keypoints. It does this for 256 points for each keypoint until the 256 length binary vector is constructed.
+
+#### Scale and Rotation Invariance
+[Detailed Explaination Video](https://www.youtube.com/watch?v=2k3T6rfjvx0)
+
+Given an image, the ORB algorithm, starts building a pyramid of the original consists the scaled downed version of the original image by resolution. At each level, the resolution is halfed. At each level, ORB runs FAST to get keypoints in each level, such that ORB is getting keypoints at different scale. This is important since object can be at any distance away from camera.
+
+ORB also calculate rotation using orientation centroids. Once orientation has been assigned to each keypoint at original level, orb does the same for each level of the pyramid. This result in each keypoint been different size. 
+
+After this, ORB uses **rotated BRIEF** to make the rotation rotation invariant. RBRIEF then construct set of feature vectors known as ORB descriptor. 
+
+#### Feature Matching
+[Detailed Explaination Video](https://www.youtube.com/watch?v=RH05Wnl1-2A)
+
+Given a training image and a query image, the ORB descripor is constructed for the training image and query image. Then we perform keypoints matching which is typically performed by a matching function. Matching function rates the quality of the match by some metric, such as Euclidian distance, to determine a match. Hemming metric is typically used for ORB. It counts the number of matching bits to determine if there's a match.
