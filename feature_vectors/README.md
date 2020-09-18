@@ -45,3 +45,17 @@ After this, ORB uses **rotated BRIEF** to make the rotation rotation invariant. 
 [Detailed Explaination Video](https://www.youtube.com/watch?v=RH05Wnl1-2A)
 
 Given a training image and a query image, the ORB descripor is constructed for the training image and query image. Then we perform keypoints matching which is typically performed by a matching function. Matching function rates the quality of the match by some metric, such as Euclidian distance, to determine a match. Hemming metric is typically used for ORB. It counts the number of matching bits to determine if there's a match.
+
+#### ORB in Video
+[Detailed Explaination Video](https://www.youtube.com/watch?v=Vzs6B1dFQC0)
+
+We first compute the ORB descriptor for the training image, then for each frame in the image, we use matching function to find keypoints with the saved descriptor. For each frame, we see if the match is above a threshold that we set to compute matches. This can be done in real time as ORB binary descriptor can be quickly computed. ORB works well for distinct feature detection where feature don't change much, e.g face feature detection. In cases like general pedestrian detection, it does not work so well since each pedestrian have different features.
+
+### HOG (Historgram of Orriented Gradients)
+[Detailed Explaination Video](https://www.youtube.com/watch?v=dqe9zGtxoNM)
+
+1. Calculate the magnitude and direction of the gradient at each pixel.
+2. Groups these pixels into square cells.
+3. Counts how many gradients in each cell fall in a certain range of orientation.
+
+This histogram of oriented gradient is actually a feature vector. We use it to train a classifier.
