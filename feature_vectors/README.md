@@ -59,3 +59,9 @@ We first compute the ORB descriptor for the training image, then for each frame 
 3. Counts how many gradients in each cell fall in a certain range of orientation.
 
 This histogram of oriented gradient is actually a feature vector. We use it to train a classifier.
+
+
+## Summary
+Convolutional filters and ORB and HOG descriptors all rely on patterns of intensity to identify different shapes (like edges) and eventually whole objects (with feature vectors). You've even seen how k-means clustering can be used to group data without any labels.
+
+Next, we'll see how to define and train a Convolutional Neural Network (CNN) that learns to extract important features from images.
