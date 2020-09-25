@@ -30,6 +30,8 @@ First, let's take a look at a complete CNN architecture; below is a network call
 VGG-16 architecture
 
 ### Convolutional Layer
+[Detailed Explaination Video](https://www.youtube.com/watch?v=LX-yVob3c28)
+
 The first layer in this network, that processes the input image directly, is a convolutional layer.
 
 - A convolutional layer takes in an image as input.
@@ -40,3 +42,71 @@ The first layer in this network, that processes the input image directly, is a c
 ### Activation Function
 You may also note that the diagram reads "convolution + ReLu," and the **ReLu** stands for Rectified Linear Unit (ReLU) activation function. This activation function is zero when the input x <= 0 and then linear with a slope = 1 when x > 0. ReLu's, and other activation functions, are typically placed after a convolutional layer to slightly transform the output so that it's more efficient to perform backpropagation and effectively train the network.
 
+### Defining Layers in Pytorch
+#### Define a Network Architecture
+The various layers that make up any neural network are documented, here. For a convolutional neural network, we'll use a simple series of layers:
+
+- Convolutional layers
+- Maxpooling layers
+- Fully-connected (linear) layers
+
+To define a neural network in PyTorch, you'll create and name a new neural network class, define the layers of the network in a function `__init__` and define the feedforward behavior of the network that employs those initialized layers in the function `forward`, which takes in an input image tensor, x. The structure of such a class, called `Net` is shown below.
+
+Note: During training, PyTorch will be able to perform backpropagation by keeping track of the network's feedforward behavior and using autograd to calculate the update to the weights in the network.
+```
+import torch.nn as nn
+import torch.nn.functional as F
+
+class Net(nn.Module):
+
+    def __init__(self, n_classes):
+        super(Net, self).__init__()
+
+        # 1 input image channel (grayscale), 32 output channels/feature maps
+        # 5x5 square convolution kernel
+        self.conv1 = nn.Conv2d(1, 32, 5)
+
+        # maxpool layer
+        # pool with kernel_size=2, stride=2
+        self.pool = nn.MaxPool2d(2, 2)
+
+        # fully-connected layer
+        # 32*4 input size to account for the downsampled image size after pooling
+        # num_classes outputs (for n_classes of image data)
+        self.fc1 = nn.Linear(32*4, n_classes)
+
+    # define the feedforward behavior
+    def forward(self, x):
+        # one conv/relu + pool layers
+        x = self.pool(F.relu(self.conv1(x)))
+
+        # prep for linear layer by flattening the feature maps into feature vectors
+        x = x.view(x.size(0), -1)
+        # linear layer 
+        x = F.relu(self.fc1(x))
+
+        # final output
+        return x
+
+# instantiate and print your Net
+n_classes = 20 # example number of classes
+net = Net(n_classes)
+print(net)
+```
+Let's go over the details of what is happening in this code.
+
+Define the Layers in `__init__`
+Convolutional and maxpooling layers are defined in `__init__`:
+```
+# 1 input image channel (for grayscale images), 32 output channels/feature maps, 3x3 square convolution kernel
+self.conv1 = nn.Conv2d(1, 32, 3)
+
+# maxpool that uses a square window of kernel_size=2, stride=2
+self.pool = nn.MaxPool2d(2, 2)    
+```
+Refer to Layers in `forward`
+Then these layers are referred to in the `forward` function like this, in which the conv1 layer has a ReLu activation applied to it before maxpooling is applied:
+```
+x = self.pool(F.relu(self.conv1(x)))
+```
+Best practice is to place any layers whose weights will change during the training process in `__init__` and refer to them in the `forward` function; any layers or functions that always behave in the same way, such as a pre-defined activation function, may appear in the `__init__` or in the `forward` function; it is mostly a matter of style and readability.
