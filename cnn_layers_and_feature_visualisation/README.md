@@ -110,3 +110,22 @@ Then these layers are referred to in the `forward` function like this, in which 
 x = self.pool(F.relu(self.conv1(x)))
 ```
 Best practice is to place any layers whose weights will change during the training process in `__init__` and refer to them in the `forward` function; any layers or functions that always behave in the same way, such as a pre-defined activation function, may appear in the `__init__` or in the `forward` function; it is mostly a matter of style and readability.
+
+### VGG-16 Architecture
+Take a look at the layers after the initial convolutional layers in the VGG-16 architecture.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5ac8089a_vgg-16/vgg-16.png)
+
+VGG-16 architecture
+
+#### Pooling Layer
+After a couple of convolutional layers (+ReLu's), in the VGG-16 network, you'll see a maxpooling layer.
+
+- Pooling layers take in an image (usually a filtered image) and output a reduced version of that image
+- Pooling layers reduce the dimensionality of an input
+- Maxpooling layers look at areas in an input image (like the 4x4 pixel area pictured below) and choose to keep the maximum pixel value in that area, in a new, reduced-size area.
+- Maxpooling is the most common type of pooling layer in CNN's, but there are also other types such as average pooling.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5ac808d4_screen-shot-2018-04-06-at-4.54.39-pm/screen-shot-2018-04-06-at-4.54.39-pm.png)
+
+Maxpooling with a 2x2 area and stride of 2
