@@ -132,9 +132,6 @@ After a couple of convolutional layers (+ReLu's), in the VGG-16 network, you'll 
 
 Maxpooling with a 2x2 area and stride of 2
 
-### VGG-16 Architecture
-Take a look at the layers near the end of this model; the fully-connected layers that come after a series of convolutional and pooling layers. Take note of their flattened shape.
-
 #### Fully-Connected Layer
 A fully-connected layer's job is to connect the input it sees to a desired form of output. Typically, this means converting a matrix of image features into a feature vector whose dimensions are 1xC, where C is the number of classes. As an example, say we are sorting images into ten classes, you could give a fully-connected layer a set of [pooled, activated] feature maps as input and tell it to use a combination of these features (multiplying them, adding them, combining them, etc.) to output a 10-item long feature vector. This vector compresses the information from the feature maps into a single feature vector.
 
