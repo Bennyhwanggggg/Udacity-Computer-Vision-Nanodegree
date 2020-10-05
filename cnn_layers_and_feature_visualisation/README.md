@@ -145,3 +145,57 @@ Convolutional, pooling, and fully-connected layers are all you need to construct
 
 Dropout layers essentially turn off certain nodes in a layer with some probability, p. This ensures that all nodes get an equal chance to try and classify different images during training, and it reduces the likelihood that only a few, heavily-weighted nodes will dominate the process.
 
+#### Dropout and Momentum
+Dropout and momentum will show a different (improved) model for clothing classification. It has two main differences when compared to the first solution:
+
+1. It has an additional dropout layer
+2. It includes a momentum term in the optimizer: stochastic gradient descent
+
+##### Dropout
+Dropout randomly turns off perceptrons (nodes) that make up the layers of our network, with some specified probability. It may seem counterintuitive to throw away a connection in our network, but as a network trains, some nodes can dominate others or end up making large mistakes, and dropout gives us a way to balance our network so that every node works equally towards the same goal, and if one makes a mistake, it won't dominate the behavior of our model. You can think of dropout as a technique that makes a network resilient; it makes all the nodes work well as a team by making sure no node is too weak or too strong.
+
+I encourage you to look at the PyTorch dropout documentation, [here](https://pytorch.org/docs/stable/nn.html#dropout-layers), to see how to add these layers to a network.
+
+##### Momentum
+When you train a network, you specify an optimizer that aims to reduce the errors that your network makes during training. The errors that it makes should generally reduce over time but there may be some bumps along the way. Gradient descent optimization relies on finding a local minimum for an error, but it has trouble finding the global minimum which is the lowest an error can get. So, we add a momentum term to help us find and then move on from local minimums and find the global minimum!
+
+## How can you decide on a network structure?
+At this point, deciding on a network structure: how many layers to create, when to include dropout layers, and so on, may seem a bit like guessing, but there is a rationale behind defining a good model.
+
+I think a lot of people (myself included) build up an intuition about how to structure a network from existing models. Take AlexNet as an example; linked is a nice, [concise walkthrough of structure and reasoning](https://medium.com/@smallfishbigsea/a-walk-through-of-alexnet-6cbd137a5637).
+
+![Image](https://video.udacity-data.com/topher/2018/May/5b05c5fd_alexnet-png/alexnet-png.png)
+
+AlexNet structure.
+
+### Preventing Overfitting
+Often we see [batch norm](https://towardsdatascience.com/batch-normalization-in-neural-networks-1ac91516821c?gi=d5ef00609f35) applied after early layers in the network, say after a set of conv/pool/activation steps since this normalization step is fairly quick and reduces the amount by which hidden weight values shift around. Dropout layers often come near the end of the network; placing them in between fully-connected layers for example can prevent any node in those layers from overly-dominating.
+
+### Convolutional and Pooling Layers
+As far as conv/pool structure, I would again recommend looking at existing architectures, since many people have already done the work of throwing things together and seeing what works. In general, more layers = you can see more complex structures, but you should always consider the size and complexity of your training data (many layers may not be necessary for a simple task).
+
+### As You Learn
+When you are first learning about CNN's for classification or any other task, you can improve your intuition about model design by approaching a simple task (such as clothing classification) and quickly trying out new approaches. You are encouraged to:
+
+1. Change the number of convolutional layers and see what happens
+2. Increase the size of convolutional kernels for larger images
+3. Change loss/optimization functions to see how your model responds (especially change your hyperparameters such as learning rate and see what happens)
+4. Add layers to prevent overfitting
+5. Change the batch_size of your data loader to see how larger batch sizes can affect your training
+
+Always watch how **much** and how **quickly** your model loss decreases, and learn from improvements as well as mistakes!
+
+## Feature Visualisation
+![Detailed Explaination Video](https://www.youtube.com/watch?v=xwGa7RFg1EQ)
+
+Fature visualisation is used to give inisght on what the network is seeing. It's all about techniques that lets you see what each layer of the model is extracting.
+
+### Feature Maps
+![Detailed Explaination Video](https://www.youtube.com/watch?v=oRhsJHHWtu8)
+
+Each feature map is a filtered output in a layer. For each filter, they are passed on to the activation layer and will be either activated or not.
+
+#### First Convolutinal Layer
+![Detailed Explaination Video](https://www.youtube.com/watch?v=hIHDMWVSfsM)
+
+The first convolutional layer applies a set of image filter and outputs a stack of feature maps. We can analyse the weights of these to see what our model has learnt. 
