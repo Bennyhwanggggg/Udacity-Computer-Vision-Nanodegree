@@ -260,3 +260,146 @@ We'll skip layer 4, which continues this progression, and jump right to the fift
 A visualization of the fifth and final layer of the CNN. The gray grid on the left represents how this layer of the CNN activates (or "what it sees") based on the corresponding images from the grid on the right.
 
 The last layer picks out the highest order ideas that we care about for classification, like dog faces, bird faces, and bicycles.
+
+#### Last Layer
+In addition to looking at the first layer(s) of a CNN, we can take the opposite approach, and look at the last linear layer in a model.
+
+We know that the output of a classification CNN, is a fully-connected class score layer, and one layer before that is a **feature vector that represents the content of the input image in some way**. This feature vector is produced after an input image has gone through all the layers in the CNN, and it contains enough distinguishing information to classify the image.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adfd056_screen-shot-2018-04-24-at-5.47.43-pm/screen-shot-2018-04-24-at-5.47.43-pm.png)
+
+An input image going through some conv/pool layers and reaching a fully-connected layer. In between the feature maps and this fully-connected layer is a flattening step that creates a feature vector from the feature maps.
+
+#### Final Feature Vector
+
+So, how can we understand what’s going on in this final feature vector? What kind of information has it distilled from an image?
+
+To visualize what a vector represents about an image, we can compare it to other feature vectors, produced by the same CNN as it sees different input images. We can run a bunch of different images through a CNN and record the last feature vector for each image. This creates a feature space, where we can compare how similar these vectors are to one another.
+
+We can measure vector-closeness by looking at the **nearest neighbors** in feature space. Nearest neighbors for an image is just an image that is near to it; that matches its pixels values as closely as possible. So, an image of an orange basketball will closely match other orange basketballs or even other orange, round shapes like an orange fruit, as seen below.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adfc7f0_screen-shot-2018-04-24-at-5.08.30-pm/screen-shot-2018-04-24-at-5.08.30-pm.png)
+
+A basketball (left) and an orange (right) that are nearest neighbors in pixel space; these images have very similar colors and round shapes in the same x-y area.
+
+##### Nearest neighbors in feature space
+In feature space, the nearest neighbors for a given feature vector are the vectors that most closely match that one; we typically compare these with a metric like MSE or L1 distance. And these images may or may not have similar pixels, which the nearest-neighbor pixel images do; instead they have very similar content, which the feature vector has distilled.
+
+In short, to visualize the last layer in a CNN, we ask: which feature vectors are closest to one another and which images do those correspond to?
+
+And you can see an example of nearest neighbors in feature space, below; an image of a basketball that matches with other images of basketballs despite being a different color.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adfc876_screen-shot-2018-04-24-at-5.08.36-pm/screen-shot-2018-04-24-at-5.08.36-pm.png)
+
+Nearest neighbors in feature space should represent the same kind of object.
+
+#### Dimensionality reduction
+Another method for visualizing this last layer in a CNN is to reduce the dimensionality of the final feature vector so that we can display it in 2D or 3D space.
+
+For example, say we have a CNN that produces a 256-dimension vector (a list of 256 values). In this case, our task would be to reduce this 256-dimension vector into 2 dimensions that can then be plotted on an x-y axis. There are a few techniques that have been developed for compressing data like this.
+
+##### Principal Component Analysis
+
+One is PCA, principal component analysis, which takes a high dimensional vector and compresses it down to two dimensions. It does this by looking at the feature space and creating two variables (x, y) that are functions of these features; these two variables want to be as different as possible, which means that the produced x and y end up separating the original feature data distribution by as large a margin as possible.
+
+##### t-SNE
+
+Another really powerful method for visualization is called t-SNE (pronounced, tea-SNEE), which stands for t-distributed stochastic neighbor embeddings. It’s a non-linear dimensionality reduction that, again, aims to separate data in a way that clusters similar data close together and separates differing data.
+
+As an example, below is a t-SNE reduction done on the MNIST dataset, which is a dataset of thousands of 28x28 images, similar to FashionMNIST, where each image is one of 10 hand-written digits 0-9.
+
+The 28x28 pixel space of each digit is compressed to 2 dimensions by t-SNE and you can see that this produces ten clusters, one for each type of digits in the dataset!
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adfcde8_t-sne-mnist/t-sne-mnist.png)
+
+t-SNE run on MNIST handwritten digit dataset. 10 clusters for 10 digits. You can see the [generation code on Github](https://github.com/alexisbcook/tsne).
+
+##### t-SNE and practice with neural networks
+If you are interested in learning more about neural networks, take a look at the **Elective Section: Text Sentiment Analysis**. Though this section is about text classification and not images or visual data, the instructor, Andrew Trask, goes through the creation of a neural network step-by-step, including setting training parameters and changing his model when he sees unexpected loss results.
+
+He also provides an example of t-SNE visualization for the sentiment of different words, so you can actually see whether certain words are typically negative or positive, which is really interesting!
+
+**This elective section will be especially good practice for the upcoming section Advanced Computer Vision and Deep Learning**, which covers RNN's for analyzing sequences of data (like sequences of text). So, if you don't want to visit this section now, you're encouraged to look at it later on.
+
+### Other Feature Visualization Techniques
+Feature visualization is an active area of research and before we move on, I'd like like to give you an overview of some of the techniques that you might see in research or try to implement on your own!
+
+#### Occlusion Experiments
+Occlusion means to block out or mask part of an image or object. For example, if you are looking at a person but their face is behind a book; this person's face is hidden (occluded). Occlusion can be used in feature visualization by blocking out selective parts of an image and seeing how a network responds.
+
+The process for an occlusion experiment is as follows:
+
+1. Mask part of an image before feeding it into a trained CNN,
+2. Draw a heatmap of class scores for each masked image,
+3. Slide the masked area to a different spot and repeat steps 1 and 2.
+The result should be a heatmap that shows the predicted class of an image as a function of which part of an image was occluded. The reasoning is that **if the class score for a partially occluded image is different than the true class, then the occluded area was likely very important!**
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adf872b_screen-shot-2018-04-24-at-12.35.07-pm/screen-shot-2018-04-24-at-12.35.07-pm.png)
+
+Occlusion experiment with an image of an elephant.
+
+#### Saliency Maps
+Salience can be thought of as the importance of something, and for a given image, a saliency map asks: Which pixels are most important in classifying this image?
+
+Not all pixels in an image are needed or relevant for classification. In the image of the elephant above, you don't need all the information in the image about the background and you may not even need all the detail about an elephant's skin texture; only the pixels that distinguish the elephant from any other animal are important.
+
+Saliency maps aim to show these important pictures by computing the gradient of the class score with respect to the image pixels. A gradient is a measure of change, and so, the gradient of the class score with respect to the image pixels is a measure of how much a class score for an image changes if a pixel changes a little bit.
+
+##### Measuring change
+
+A saliency map tells us, for each pixel in an input image, if we change it's value slightly (by dp), how the class output will change. If the class scores change a lot, then the pixel that experienced a change, dp, is important in the classification task.
+
+Looking at the saliency map below, you can see that it identifies the most important pixels in classifying an image of a flower. These kinds of maps have even been used to perform image segmentation (imagine the map overlay acting as an image mask)!
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adf89f5_screen-shot-2018-04-24-at-12.47.51-pm/screen-shot-2018-04-24-at-12.47.51-pm.png)
+
+Graph-based saliency map for a flower; the most salient (important) pixels have been identified as the flower-center and petals.
+
+##### Guided Backpropagation
+Similar to the process for constructing a saliency map, you can compute the gradients for mid level neurons in a network with respect to the input pixels. Guided backpropagation looks at each pixel in an input image, and asks: if we change it's pixel value slightly, how will the output of a particular neuron or layer in the network change. If the expected output change a lot, then the pixel that experienced a change, is important to that particular layer.
+
+This is very similar to the backpropagation steps for measuring the error between an input and output and propagating it back through a network. Guided backpropagation tells us exactly which parts of the image patches, that we’ve looked at, activate a specific neuron/layer.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adf8c6c_screen-shot-2018-04-24-at-12.58.16-pm/screen-shot-2018-04-24-at-12.58.16-pm.png)
+
+Examples of guided backpropagation.
+
+## Summary of Feature Visualisation
+[Summary](https://www.youtube.com/watch?v=r2LBoEkXskU&feature=emb_logo)
+
+### Deep Dream
+DeepDream takes in an input image and uses the features in a trained CNN to amplifying the existing, detected features in the input image! The process is as follows:
+
+1. Choose an input image, and choose a convolutional layer in the network whose features you want to amplify (the first layer will amplify simple edges and later layers will amplify more complex features).
+2. Compute the activation maps for the input image at your chosen layer.
+3. Set the gradient of the chosen layer equal to the activations and and use this to compute the gradient image.
+4. Update the input image and repeat!
+
+In step 3, by setting the gradient in the layer equal to the activation, we’re telling that layer to give more weight to the features in the activation map. So, if a layer detects corners, then the corners in an input image will be amplified, and you can see such corners in the upper-right sky of the mountain image, below. For any layer, changing the gradient to be equal to the activations in that layer will amplify the features in the given image that the layer is responding to the most.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adea62f_screen-shot-2018-04-23-at-8.35.17-pm/screen-shot-2018-04-23-at-8.35.17-pm.png)
+
+DeepDream on an image of a mountain.
+
+### Style Transfer
+Style transfer aims to separate the content of an image from its style. So, how does it do this?
+
+#### Isolating content
+
+When Convolutional Neural Networks are trained to recognize objects, further layers in the network extract features that distill information about the content of an image and discard any extraneous information. That is, as we go deeper into a CNN, the input image is transformed into feature maps that increasingly care about the content of the image rather than any detail about the texture and color of pixels (which is something close to style).
+
+You may hear features, in later layers of a network, referred to as a "content representation" of an image.
+
+#### Isolating style
+
+To isolate the style of an input image, a feature space designed to capture texture information is used. This space essentially looks at the correlations between feature maps in each layer of a network; the correlations give us an idea of texture and color information but leave out information about the arrangement of different objects in an image.
+
+#### Combining style and content to create a new image
+
+Style transfer takes in two images, and separates the content and style of each of those images. Then, to transfer the style of one image to another, it takes the content of the new image and applies the style of an another image (often a famous artwork).
+
+The objects and shape arrangement of the new image is preserved, and the colors and textures (style) that make up the image are taken from another image. Below you can see an example of an image of a cat [content] being combined with the a Hokusai image of waves [style]. Effectively, style transfer renders the cat image in the style of the wave artwork.
+
+![Image](https://video.udacity-data.com/topher/2018/April/5adea649_screen-shot-2018-04-23-at-8.35.25-pm/screen-shot-2018-04-23-at-8.35.25-pm.png)
+
+Style transfer on an image of a cat and waves.
