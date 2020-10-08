@@ -186,16 +186,16 @@ When you are first learning about CNN's for classification or any other task, yo
 Always watch how **much** and how **quickly** your model loss decreases, and learn from improvements as well as mistakes!
 
 ## Feature Visualisation
-![Detailed Explaination Video](https://www.youtube.com/watch?v=xwGa7RFg1EQ)
+[Detailed Explaination Video](https://www.youtube.com/watch?v=xwGa7RFg1EQ)
 
 Fature visualisation is used to give inisght on what the network is seeing. It's all about techniques that lets you see what each layer of the model is extracting.
 
 ### Feature Maps
-![Detailed Explaination Video](https://www.youtube.com/watch?v=oRhsJHHWtu8)
+[Detailed Explaination Video](https://www.youtube.com/watch?v=oRhsJHHWtu8)
 
 Each feature map is a filtered output in a layer. For each filter, they are passed on to the activation layer and will be either activated or not.
 
 #### First Convolutinal Layer
-![Detailed Explaination Video](https://www.youtube.com/watch?v=hIHDMWVSfsM)
+[Detailed Explaination Video](https://www.youtube.com/watch?v=hIHDMWVSfsM)
 
 The first convolutional layer applies a set of image filter and outputs a stack of feature maps. We can analyse the weights of these to see what our model has learnt. 
