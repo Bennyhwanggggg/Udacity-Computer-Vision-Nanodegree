@@ -54,3 +54,28 @@ An R-CNN feeds an image into a CNN with regions of interest (RoI’s) already id
 
 R-CNN produces bounding box coordinates to reduce localization errors; so a region comes in, but it may not perfectly surround a given object and the output coordinates `(x,y,w,h)` aim to perfectly localize an object in a given region.
 R-CNN, unlike other models, does not explicitly produce a confidence score that indicates whether an object is in a region, instead it cleverly produces a set of class scores for which one class is "background". This ends up serving a similar purpose, for example, if the class score for a region is `Pbackground = 0.10`, it likely contains an object, but if it's `Pbackground = 0.90`, then the region probably doesn't contain an object.
+
+### Fast R-CNN
+[Detailed Explaination Video](https://www.youtube.com/watch?v=6FOBZ9OgWlY)
+
+Instead of processing each ROI individual through the classficication CNN. This architecture runs the image into the classfication CNN only once. Fast R-CNN employs several innovations to improve training and testing speed while also increasing detection accuracy. Instead of feeding the region proposals to the CNN, we feed the input image to the CNN to generate a convolutional feature map. From the convolutional feature map, we identify the region of proposals and warp them into squares and by using a RoI pooling layer we reshape them into a fixed size so that it can be fed into a fully connected layer. From the RoI feature vector, we use a softmax layer to predict the class of the proposed region and also the offset values for the bounding box.
+
+#### RoI Pooling
+To warp regions of interest into a consistent size for further analysis, some networks use RoI pooling. RoI pooling is an additional layer in our network that takes in a rectangular region of any size, performs a maxpooling operation on that region in pieces such that the output is a fixed shape. Below is an example of a region with some pixel values being broken up into pieces which pooling will be applied to; a section with the values:
+
+```
+[[0.85, 0.34, 0.76],
+ [0.32, 0.74, 0.21]]
+ ```
+Will become a single max value after pooling: 0.85. After applying this to an image in these pieces, you can see how any rectangular region can be forced into a smaller, square representation.
+
+![Image](https://video.udacity-data.com/topher/2018/May/5aeb9cc4_screen-shot-2018-05-03-at-4.34.25-pm/screen-shot-2018-05-03-at-4.34.25-pm.png)
+
+An example of pooling sections, credit to this informational resource on RoI pooling [by Tomasz Grel].
+
+You can see the complete process from input image to region to reduced, maxpooled region, below.
+
+![Image](https://video.udacity-data.com/topher/2018/May/5aeb9dc6_roi-pooling-gif/roi-pooling-gif.gif)
+
+#### Speed
+Fast R-CNN is about 10 times as fast to train as an R-CNN because it only creates convolutional layers once for a given image and then performs further analysis on the layer. Fast R-CNN also takes a shorter time to test on a new image! It’s test time is dominated by the time it takes to create region proposals.
