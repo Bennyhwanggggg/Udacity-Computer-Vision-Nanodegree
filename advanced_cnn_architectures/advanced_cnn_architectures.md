@@ -79,3 +79,25 @@ You can see the complete process from input image to region to reduced, maxpoole
 
 #### Speed
 Fast R-CNN is about 10 times as fast to train as an R-CNN because it only creates convolutional layers once for a given image and then performs further analysis on the layer. Fast R-CNN also takes a shorter time to test on a new image! It’s test time is dominated by the time it takes to create region proposals.
+
+### Faster R-CNN
+Faster R-CNN has a lower time to form region proposals. It takes an input image, and puts into CNN until a certain convolution layer. This time it uses the produced feature map as input into a separate region proposal network. It produce its own feature in the region proposal network. For each ROI, it checks if it contains an object and perform classification if it does. It eliminates the non-object ROI first to speed up the process. 
+
+#### Region Proposal Network
+You may be wondering: how exactly are the RoI's generated in the region proposal portion of the Faster R-CNN architecture?
+
+The region proposal network (RPN) works in Faster R-CNN in a way that is similar to YOLO object detection, which you'll learn about in the next lesson. The RPN looks at the output of the last convolutional layer, a produced feature map, and takes a sliding window approach to possible-object detection. It slides a small (typically 3x3) window over the feature map, then for each window the RPN:
+
+1. Uses a set of defined anchor boxes, which are boxes of a defined aspect ratio (wide and short or tall and thin, for example) to generate multiple possible RoI's, each of these is considered a region proposal.
+2. For each proposal, this network produces a probability, Pc, that classifies the region as an object (or not) and a set of bounding box coordinates for that object.
+3. Regions with too low a probability of being an object, say Pc < 0.5, are discarded.
+
+##### Training the Region Proposal Network
+Since, in this case, there are no ground truth regions, how do you train the region proposal network?
+
+The idea is, for any region, you can check to see if it overlaps with any of the ground truth objects. That is, for a region, if we classify that region as an object or not-object, which class will it fall into? For a region proposal that does cover some portion of an object, we should say that there is a high probability that this region has an object init and that region should be kept; if the likelihood of an object being in a region is too low, that region should be discarded.
+
+I'd recommend [this blog post](https://towardsdatascience.com/deep-learning-for-object-detection-a-comprehensive-review-73930816d8d9) if you'd like to learn more about region selection.
+
+#### Speed Bottleneck
+Now, for all of these networks including Faster R-CNN, we've aimed to improve the speed of our object detection models by reducing the time it takes to generate and decide on region proposals. 
