@@ -74,3 +74,38 @@ For each training image, we break into each grid and assign a ground truth. We d
 [Detailed Explaination Video](https://www.youtube.com/watch?v=TGfPX-XcyOs)
 
 For each training image, we locate the midpoint of each object in the image and assign the ground true bounding box to the grid cell that contains the mid point. In YOLO, (x, y) determine the distance the centre point is from the top left of the bounding box. While width and height are based on precentage compared to the image.
+
+#### Too many bounding boxes
+[Detailed Explaination Video](https://www.youtube.com/watch?v=nYDWsFdFnQ8)
+
+We use a technique called non-maximal suppression to find the best bounding boxes in an image and ignore all other irrelvant bounding boxes.
+
+##### Intersection over Union (IOU)
+[Detailed Explaination Video](https://www.youtube.com/watch?v=ieKEHlEjIsY)
+
+```
+IOU = Area of Intersection / Area over Union
+```
+
+##### Non-Maximal Suppression
+[Detailed Explaination Video](https://www.youtube.com/watch?v=TE6M29Jo9hk)
+
+In practice Non-maximal Suppression is implemented in a few steps.
+
+1. Look at the output vector of each grid cell. Recall that each grid cell will have an output vector with a Pc value and bounding box coordinates.
+2. Remove all bounding boxes that have a Pc value less than or equal to some threshold, say 0.5. Therefore, we will only keep a bounding box, if there is more than a 50% chance of an object being inside of it.
+3. Select the bounding box with the highest Pc value.
+4. Remove all the bounding boxes that have a high IoU* with the box selected in the last step.
+* A high IoU usually means a that the IoU is greater than or equal to 0.5.
+
+##### Anchor Boxes
+[Detailed Explaination Video](https://www.youtube.com/watch?v=IzILYgVb76g)
+
+To deal with overlapping objects, we use **Anchor Boxes**. By defining multiple Anchor Boxes, we allow multiple object classification. As a result, the output vector will now contain more elements. Anchor boxes uses the overall shape of object to compute which object is closer to which box. However, it has limitation with objects that are similar shapes (e.g person 1 and person 2)
+
+### How YOLO use all these technqiues?
+[Detailed Explaination Video](https://www.youtube.com/watch?v=ZbQzCHQ8YEo)
+
+1. Once the CNN has been trained, the test image is broken up into grids and CNN produce output vectors for each grid. 
+2. Use non-maximal suppression to remove unlikely bounding boxes (the ones below pc value threshold)
+3. It will then classify the ones with high pc value.
