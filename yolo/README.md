@@ -59,3 +59,18 @@ In fact, if we follow all the windows through the CNN we see that all the 16 win
 This is how you can apply sliding windows with a CNN. This technique makes the whole process much more efficient. However, this technique has a downside: the position of the bounding boxes is not going to be very accurate. The reason is that it is quite unlikely that a given size window and stride will be able to match the objects in the images perfectly. In order to increase the accuracy of the bounding boxes, YOLO uses a grid instead of sliding windows, in addition to two other techniques, known as Intersection Over Union and Non-Maximal Suppression.
 
 The combination of the above techniques is part of the reason the YOLO algorithm works so well. Before diving into how YOLO puts all these techniques together, we will look first at each technique individually.
+
+### Grid Method
+[Detailed Explaination Video](https://www.youtube.com/watch?v=OmgR35Go79Y)
+
+As sliding window is too slow, YOLO uses a grid to improve localization. For each grid cells, we have an associated vector that tells us if an object is in that cell, the predicted bounding box and the class of the object. 
+
+#### Training on a Grid
+[Detailed Explaination Video](https://www.youtube.com/watch?v=uhefpakvXh8)
+
+For each training image, we break into each grid and assign a ground truth. We design a CNN with the `height of grids * width of grids * size of feature vector` and put it into the CNN to train.
+
+#### Generating Bounding Boxes
+[Detailed Explaination Video](https://www.youtube.com/watch?v=TGfPX-XcyOs)
+
+For each training image, we locate the midpoint of each object in the image and assign the ground true bounding box to the grid cell that contains the mid point. In YOLO, (x, y) determine the distance the centre point is from the top left of the bounding box. While width and height are based on precentage compared to the image.
