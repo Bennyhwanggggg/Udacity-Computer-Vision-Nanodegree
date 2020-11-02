@@ -5,6 +5,8 @@ In the previous lessons, you learned all about localization methods that aim to 
 In this lesson, you'll learn how to implement SLAM (Simultaneous Localization and Mapping) for a 2 dimensional world! You’ll combine what you know about robot sensor measurements and movement to create locate a robot and create a map of an environment from only sensor and motion data gathered by a robot, over time. SLAM gives you a way to track the location of a robot in the world in real-time and identify the locations of landmarks such as buildings, trees, rocks, and other world features.
 
 ## Graph SLAM
+[Read more here](https://medium.com/@krunalkshirsagar/graph-slam-a-noobs-guide-to-simultaneous-localization-and-mapping-aaff4ee91dee)
+
 One of the SLAM method. It is a graph-based SLAM approach constructs a simplified estimation problem by abstracting the raw sensor measurements. These raw measurements are replaced by the edges in the graph which can then be seen as virtual measurements. But according to Kalman filters and various other robotic techniques, we have learned that the location is actually uncertain. So, rather than assuming in our X-Y coordinate system the robot moved to the right by 10 exactly, it’s better to understand that the actual location of the robot after the x1= x0+10 motion update is a Gaussian centered around (10,0), but it’s possible that the robot is somewhere else.
 
 ![Image](https://miro.medium.com/max/875/1*jJFMFqy51YYQUczkxF4Ylg.png)
